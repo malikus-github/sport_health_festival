@@ -1,0 +1,821 @@
+<title>Sport & Health Festival Ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap">
+<style>
+  :root{
+    --bg:#F6F3EA;
+    --surface:#FFFFFF;
+    --surface-2:#FBF9F1;
+    --border:#E7E0CE;
+    --text:#1C2018;
+    --text-muted:#5B5648;
+    --text-inverse:#F5F2E6;
+    --navy:#14233F;
+    --navy-2:#1E355C;
+    --accent:#2E7DB8;
+    --accent-ink:#FFFFFF;
+    --good:#2F8F5B;
+    --good-bg:#E3EFE6;
+    --warn:#B9791F;
+    --warn-bg:#F5ECDA;
+    --crit:#B23B30;
+    --crit-bg:#F5E2DF;
+    --neutral:#8B8577;
+    --neutral-bg:#ECE8DC;
+    --shadow:0 1px 2px rgba(20,35,63,.06), 0 6px 20px rgba(20,35,63,.07);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161B;
+      --surface:#1A1F26;
+      --surface-2:#20262E;
+      --border:#2C333D;
+      --text:#EAE6D9;
+      --text-muted:#A6A08D;
+      --text-inverse:#F1EDE0;
+      --navy:#16233C;
+      --navy-2:#233C63;
+      --accent:#6BAEE0;
+      --accent-ink:#0C1720;
+      --good:#57B384;
+      --good-bg:#1B2B22;
+      --warn:#E0A34C;
+      --warn-bg:#2E2617;
+      --crit:#E2796C;
+      --crit-bg:#301F1C;
+      --neutral:#8D8877;
+      --neutral-bg:#232821;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161B;
+    --surface:#1A1F26;
+    --surface-2:#20262E;
+    --border:#2C333D;
+    --text:#EAE6D9;
+    --text-muted:#A6A08D;
+    --text-inverse:#F1EDE0;
+    --navy:#16233C;
+    --navy-2:#233C63;
+    --accent:#6BAEE0;
+    --accent-ink:#0C1720;
+    --good:#57B384;
+    --good-bg:#1B2B22;
+    --warn:#E0A34C;
+    --warn-bg:#2E2617;
+    --crit:#E2796C;
+    --crit-bg:#301F1C;
+    --neutral:#8D8877;
+    --neutral-bg:#232821;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:15px;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    letter-spacing:-0.01em;
+  }
+  .tab-num{ font-variant-numeric: tabular-nums; }
+  a{ color:inherit; }
+
+  /* ---------- Header ---------- */
+  header.top{
+    background:linear-gradient(155deg, var(--navy) 0%, var(--navy-2) 100%);
+    color:var(--text-inverse);
+    padding:28px clamp(16px,4vw,40px) 32px;
+  }
+  .top-inner{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:flex-end;
+    justify-content:space-between;
+  }
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:12px;
+    font-weight:600;
+    color:#B9C7DC;
+    margin:0 0 6px;
+  }
+  header.top h1{
+    margin:0 0 6px;
+    font-size:clamp(28px,4vw,40px);
+    color:var(--text-inverse);
+  }
+  .event-meta{
+    margin:0;
+    color:#CBD6E6;
+    font-size:14px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 14px;
+  }
+  .countdown-card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:var(--radius);
+    padding:14px 20px;
+    min-width:240px;
+    backdrop-filter:blur(2px);
+  }
+  .countdown-card .hday{
+    font-family:"Fraunces",serif;
+    font-size:34px;
+    font-weight:700;
+    line-height:1;
+    color:#fff;
+  }
+  .countdown-card .clock{
+    margin-top:6px;
+    font-size:13px;
+    color:#CBD6E6;
+  }
+  .countdown-card .clock b{ color:#fff; font-weight:600; }
+
+  /* ---------- Overview ---------- */
+  main{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px clamp(16px,4vw,40px) 60px;
+  }
+  section{ margin-bottom:40px; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{ margin:0; font-size:21px; color:var(--text); }
+  .section-note{ color:var(--text-muted); font-size:13px; }
+
+  .overview-grid{
+    display:grid;
+    grid-template-columns: minmax(200px,260px) 1fr;
+    gap:20px;
+  }
+  @media (max-width:720px){ .overview-grid{ grid-template-columns:1fr; } }
+
+  .progress-ring-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .ring{
+    width:84px; height:84px; border-radius:50%;
+    background:conic-gradient(var(--accent) calc(var(--pct,0)*1%), var(--border) 0);
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .ring::after{
+    content:"";
+    width:60px; height:60px; border-radius:50%;
+    background:var(--surface);
+  }
+  .ring-wrap{ position:relative; width:84px; height:84px; }
+  .ring-num{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:"Fraunces",serif; font-weight:700; font-size:18px;
+  }
+  .ring-label{ font-size:13px; color:var(--text-muted); }
+  .ring-label b{ display:block; color:var(--text); font-size:15px; font-weight:600; }
+
+  .chip-row{
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .chip{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:8px 14px 8px 12px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:13px;
+    font-weight:500;
+    box-shadow:var(--shadow);
+  }
+  .chip .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  .chip .count{ color:var(--text-muted); font-weight:600; }
+  .dot.st-done{ background:var(--good); }
+  .dot.st-partial{ background:var(--warn); }
+  .dot.st-none{ background:var(--neutral); }
+
+  /* ---------- Checklist ---------- */
+  .checklist-grid{
+    columns: 2 400px;
+    column-gap: 20px;
+  }
+  details.category{
+    break-inside: avoid;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin:0 0 20px;
+    overflow:hidden;
+  }
+  details.category > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:16.5px;
+  }
+  details.category > summary::-webkit-details-marker{ display:none; }
+  details.category > summary .cat-status{
+    display:flex; align-items:center; gap:8px;
+    font-family:"Plus Jakarta Sans",sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    padding:4px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .cat-status.st-done{ background:var(--good-bg); color:var(--good); }
+  .cat-status.st-partial{ background:var(--warn-bg); color:var(--warn); }
+  .cat-status.st-none{ background:var(--neutral-bg); color:var(--neutral); }
+  summary .chev{ transition:transform .15s ease; color:var(--text-muted); flex:none; }
+  details[open] > summary .chev{ transform:rotate(90deg); }
+  @media (prefers-reduced-motion: reduce){ summary .chev{ transition:none; } }
+
+  .cat-body{
+    border-top:1px solid var(--border);
+    padding:6px 18px 14px;
+  }
+  .item-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+  }
+  .item-row:last-child{ border-bottom:none; }
+  .item-row input[type="checkbox"]{
+    width:18px; height:18px; margin-top:2px; flex:none;
+    accent-color:var(--accent);
+  }
+  .item-row label{ flex:1; cursor:pointer; }
+  .item-row .item-text{ display:block; }
+  .item-row.done .item-text{ color:var(--text-muted); text-decoration:line-through; text-decoration-color:var(--border); }
+  .item-tag{
+    display:inline-block;
+    margin-top:3px;
+    font-size:12px;
+    color:var(--text-muted);
+  }
+  .item-amount{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    flex:none;
+    white-space:nowrap;
+    padding-top:1px;
+  }
+
+  .readonly-note{
+    background:var(--warn-bg);
+    color:var(--warn);
+    border:1px solid var(--warn);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:13px;
+    margin-bottom:16px;
+    display:none;
+  }
+  .readonly-note.show{ display:block; }
+
+  /* ---------- Reference: rundown & peserta ---------- */
+  .ref-grid{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap:20px;
+    align-items:start;
+  }
+  @media (max-width:820px){ .ref-grid{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 20px;
+  }
+  .card h3{ margin:0 0 12px; font-size:16.5px; }
+
+  .timeline{ position:relative; margin:0; padding:0; list-style:none; max-height:520px; overflow-y:auto; }
+  .timeline li{
+    display:grid;
+    grid-template-columns:78px 1fr;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+    font-size:13.5px;
+  }
+  .timeline li:last-child{ border-bottom:none; }
+  .timeline .t{ color:var(--accent); font-weight:600; }
+  .timeline .who{ color:var(--text-muted); font-size:12.5px; display:block; margin-top:1px; }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .stat-tile{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 12px;
+  }
+  .stat-tile .n{ font-family:"Fraunces",serif; font-weight:700; font-size:22px; display:block; }
+  .stat-tile .l{ font-size:12px; color:var(--text-muted); }
+  .stat-total{
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-top:1px solid var(--border);
+    padding-top:10px; margin-top:2px;
+  }
+  .stat-total .n{ font-family:"Fraunces",serif; font-weight:700; font-size:24px; }
+
+  .budget-total{
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-top:1px solid var(--border);
+    margin-top:8px; padding-top:10px;
+    font-weight:600;
+  }
+  .budget-total .n{ font-family:"Fraunces",serif; font-size:20px; }
+
+  footer{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 clamp(16px,4vw,40px) 40px;
+    color:var(--text-muted);
+    font-size:12.5px;
+  }
+  footer p{ margin:4px 0; }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <p class="eyebrow">Universitas Muhammadiyah Indonesia &middot; Fakultas Agama Islam</p>
+      <h1>Sport &amp; Health Festival</h1>
+      <p class="event-meta">
+        <span>Minggu, 6 September 2026 &middot; Registrasi mulai 05.00 WIB</span>
+        <span>Jl. Cut Mutia No. 83, Kota Bekasi, Jawa Barat</span>
+      </p>
+    </div>
+    <div class="countdown-card">
+      <div class="hday tab-num" id="hday">H&minus;3</div>
+      <div class="clock tab-num" id="clock">menghitung&hellip;</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  
+
+  <section id="overview">
+    <div class="section-head">
+      <h2>Ringkasan persiapan</h2>
+      <span class="section-note">Klik kategori untuk lompat ke daftar</span>
+    </div>
+    <div class="overview-grid">
+      <div class="progress-ring-card">
+        <div class="ring-wrap">
+          <div class="ring" id="overallRing"></div>
+          <div class="ring-num tab-num" id="overallPct">0%</div>
+        </div>
+        <div class="ring-label">
+          <b id="overallCount">0 / 0 selesai</b>
+          Seluruh item persiapan
+        </div>
+      </div>
+      <div class="chip-row" id="chipRow"></div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="section-head">
+      <h2>Checklist persiapan</h2>
+      <span class="section-note">Tersimpan otomatis &amp; terlihat oleh semua panitia</span>
+    </div>
+    <div class="checklist-grid" id="checklistGrid"></div>
+  </section>
+
+  <section id="reference">
+    <div class="section-head">
+      <h2>Referensi acara</h2>
+      <span class="section-note">Dari Skema Kegiatan &amp; Roundown Acara</span>
+    </div>
+    <div class="ref-grid">
+      <div class="card">
+        <h3>Roundown acara &mdash; 6 September 2026</h3>
+        <ul class="timeline" id="timelineList"></ul>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:20px;">
+          <h3>Estimasi peserta</h3>
+          <div class="stat-grid" id="statGrid"></div>
+          <div class="stat-total"><span>Total peserta &amp; panitia</span><span class="n tab-num">2.417</span></div>
+        </div>
+        <div class="card">
+          <h3>Ringkasan anggaran</h3>
+          <p class="section-note" style="margin:0 0 8px;">17 pos anggaran &middot; centang di kategori &ldquo;Anggaran &amp; Pencairan&rdquo;</p>
+          <div class="budget-total"><span>Total anggaran</span><span class="n tab-num">Rp 42.000.000</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Sumber: SKEMA KEGIATAN DAN ROUNDOWN ACARA &mdash; Sport &amp; Health Festival, Universitas Muhammadiyah Indonesia.</p>
+  <p>by Mal</p>
+  <p id="lastLoaded"></p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var EVENT = { dateISO: "2026-09-06T05:00:00+07:00" };
+
+  var CATEGORIES = [
+    {
+      id:"perizinan", title:"Perizinan & Surat Resmi",
+      items:[
+        {id:"perizinan-dishub", label:"Izin penggunaan jalan raya ke Dishub Kota Bekasi"},
+        {id:"perizinan-polsek", label:"Pemberitahuan keramaian ke Polsek Bekasi Timur"},
+        {id:"perizinan-polres", label:"Pemberitahuan ke Polres Metro Bekasi Kota"},
+        {id:"perizinan-kcd", label:"Rekomendasi izin ke KCD Wilayah III, Disdik Provinsi Jawa Barat"},
+        {id:"perizinan-surat-sekolah", label:"Distribusi surat ke 37 sekolah (SMA/SMK) selesai terkirim"}
+      ]
+    },
+    {
+      id:"vip", title:"VIP & Undangan",
+      items:[
+        {id:"vip-walikota", label:"Walikota Bekasi", tag:"Sambutan 07.10–07.20 & pelepasan fun walk"},
+        {id:"vip-dprd", label:"Ketua DPRD Kota Bekasi"},
+        {id:"vip-pp-muhammadiyah", label:"PP Muhammadiyah"},
+        {id:"vip-pdm-kota", label:"PDM Kota Bekasi"},
+        {id:"vip-pdm-kabupaten", label:"PDM Kabupaten Bekasi"},
+        {id:"vip-pcm-kota", label:"PCM Kota Bekasi"},
+        {id:"vip-pcm-kabupaten", label:"PCM Kabupaten Bekasi"},
+        {id:"vip-prm", label:"PRM-PRM Kota Bekasi"},
+        {id:"vip-koni", label:"Ketua KONI"},
+        {id:"vip-kormi", label:"Ketua KORMI"},
+        {id:"vip-kapolresta", label:"Kapolresta Bekasi"},
+        {id:"vip-kodim", label:"Kodim 0507 Bekasi"},
+        {id:"vip-mitra", label:"Mitra UM.ID", tag:"Termasuk penandatanganan MoU"}
+      ]
+    },
+    {
+      id:"talent", title:"MC, Talent & Hiburan",
+      items:[
+        {id:"talent-mc", label:"MC dari Radio Dakta", tag:"Berstatus “dalam konfirmasi” di dokumen — perlu dipastikan"},
+        {id:"talent-qori", label:"Qori pembaca ayat suci"},
+        {id:"talent-dirigen", label:"Dirigen (Indonesia Raya & Mars Sang Surya)"},
+        {id:"talent-drumband", label:"Drumband pengiring Fun Walk"},
+        {id:"talent-psm", label:"Penampilan PSM (paduan suara mahasiswa)"},
+        {id:"talent-silat", label:"Penampilan pencak silat"},
+        {id:"talent-organ", label:"Organ tunggal (hiburan 10.30–11.00)"},
+        {id:"talent-senam", label:"Instruktur & koordinator komunitas senam"}
+      ]
+    },
+    {
+      id:"logistik", title:"Logistik & Venue",
+      items:[
+        {id:"logistik-panggung", label:"Panggung utama terpasang", tag:"Depan Gedung Suyati"},
+        {id:"logistik-tenda-bazar", label:"Tenda bazar terpasang", tag:"Depan Lab OR / samping FAI"},
+        {id:"logistik-gate", label:"Gate start/finish terpasang", tag:"Sekitar LPPM"},
+        {id:"logistik-area-senam", label:"Area lomba senam ditandai", tag:"Lajur kiri depan panggung"},
+        {id:"logistik-area-futsal", label:"Area lomba futsal disiapkan", tag:"Lapangan futsal"},
+        {id:"logistik-area-petanque", label:"Area lomba petanque disiapkan", tag:"Lapangan petanque"},
+        {id:"logistik-area-tradisional", label:"Area olahraga tradisional ditandai", tag:"Lajur kiri-kanan panggung"},
+        {id:"logistik-donor-darah", label:"Ruang donor darah PMI disiapkan", tag:"Ruang kelas Gedung A"},
+        {id:"logistik-booth-upcm", label:"Booth UPCM disiapkan", tag:"Beberapa titik lokasi"},
+        {id:"logistik-balon-udara", label:"Balon udara (sewa) terpasang & siap"},
+        {id:"logistik-lounching", label:"Balon & burung lounching disiapkan", tag:"Diiringi sirine & petasan"},
+        {id:"logistik-photobooth", label:"Photo booth terpasang", tag:"Jembatan mitra & depan UM.ID"},
+        {id:"logistik-pos-doorprize", label:"Pos kupon doorprize siap", tag:"Depan gedung DPRD"},
+        {id:"logistik-forider", label:"Forider Dishub terkonfirmasi", tag:"Membuka barisan Fun Walk"},
+        {id:"logistik-pengamanan", label:"Briefing pengamanan rute Menwa & UKM Pramuka"}
+      ]
+    },
+    {
+      id:"registrasi", title:"Registrasi & Perlengkapan Peserta",
+      items:[
+        {id:"reg-tiket", label:"Tiket acara sudah dibagikan (H-1)"},
+        {id:"reg-meja", label:"5 meja registrasi bertenda disiapkan", tag:"Depan Gedung A / FAI"},
+        {id:"reg-petugas", label:"10 petugas registrasi sudah briefing", tag:"PJ: Arria Ilham & Sunaryo"},
+        {id:"reg-goodiebag", label:"Kaos + goodie bag + snack sudah dikemas", tag:"± 2.417 orang"},
+        {id:"reg-kupon", label:"Sistem penukaran kupon senam/funwalk/doorprize siap"},
+        {id:"reg-idcard", label:"ID card panitia sudah dicetak"}
+      ]
+    },
+    {
+      id:"sponsor", title:"Sponsor & Booth Bazar",
+      items:[
+        {id:"sponsor-bsi", label:"BSI", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-bsn", label:"BSN", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-btn", label:"BTN", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-bjb", label:"BJB", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-bni", label:"BNI", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-bri", label:"BRI", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-mega-syariah", label:"Bank Mega Syariah", tag:"Konfirmasi & materi booth"},
+        {id:"sponsor-sinar-jaya", label:"Sinar Jaya", tag:"Konfirmasi & materi booth"},
+        {id:"booth-before-sujud", label:"Booth goodybag: Before Sujud", tag:"Lokasi & setup"},
+        {id:"booth-bursa-sajadah", label:"Booth goodybag: Bursa Sajadah", tag:"Lokasi & setup"},
+        {id:"booth-lumicer", label:"Booth goodybag: Lumicer", tag:"Lokasi & setup"},
+        {id:"booth-wardah", label:"Booth goodybag: Wardah", tag:"Lokasi & setup"}
+      ]
+    },
+    {
+      id:"anggaran", title:"Anggaran & Pencairan",
+      items:[
+        {id:"anggaran-dishub", label:"Ijin penggunaan jalan raya ke Dishub", amount:1000000},
+        {id:"anggaran-polsek", label:"Pemberitahuan keramaian ke Polsek Bekasi Timur", amount:500000},
+        {id:"anggaran-kcd", label:"Rekomendasi ijin ke KCD Provinsi Jawa Barat", amount:1000000},
+        {id:"anggaran-surat-sekolah", label:"Distribusi surat ke 37 sekolah", amount:500000},
+        {id:"anggaran-transport-guru", label:"Transport 37 guru pendamping @Rp150.000", amount:5550000},
+        {id:"anggaran-qori", label:"Insentif Qori", amount:150000},
+        {id:"anggaran-dirigen", label:"Insentif dirigen", amount:150000},
+        {id:"anggaran-doa", label:"Insentif do’a", amount:150000},
+        {id:"anggaran-drumband", label:"Drumband pengiring Fun Walk", amount:5000000},
+        {id:"anggaran-psm-silat", label:"Penampilan PSM & pencak silat", amount:500000},
+        {id:"anggaran-mc-radio", label:"MC dan iklan Radio Dakta", amount:2000000},
+        {id:"anggaran-forider", label:"Forider Dishub", amount:0},
+        {id:"anggaran-balon-udara", label:"Sewa balon udara", amount:20000000},
+        {id:"anggaran-balon-lounching", label:"Balon untuk lounching", amount:1000000},
+        {id:"anggaran-burung-lounching", label:"Burung untuk lounching", amount:500000},
+        {id:"anggaran-idcard", label:"ID card panitia", amount:1000000},
+        {id:"anggaran-organ", label:"Organ tunggal", amount:3000000}
+      ]
+    }
+  ];
+
+  var TIMELINE = [
+    ["05.00–06.00","Registrasi",""],
+    ["06.00–06.05","Opening acara","MC"],
+    ["06.05–06.30","Senam bersama","Mbak Yanti & Bu Eko"],
+    ["06.30–06.35","Pembukaan ceremony","MC"],
+    ["06.35–06.40","Pembacaan ayat suci Al-Qur’an","Qori"],
+    ["06.40–06.50","Menyanyikan lagu Indonesia Raya","Dirigen"],
+    ["06.50–07.00","Menyanyikan Mars Sang Surya","Dirigen"],
+    ["07.00–07.05","Laporan ketua panitia","Prof. Bujang, M.Si."],
+    ["07.05–07.10","Sambutan Rektor & lounching UM.Indonesia","Pelepasan balon & burung, sirine, petasan"],
+    ["07.10–07.20","Sambutan Walikota Bekasi","Walikota Bekasi"],
+    ["07.20–07.25","Do’a","Dekan FAI"],
+    ["07.25–07.30","Persiapan pelepasan Funwalk","Sie acara"],
+    ["07.30–08.00","Funwalk","Dilepas Rektor & Walikota"],
+    ["08.00–08.30","Doorprize","Sie acara"],
+    ["08.30–10.00","Lomba: futsal, senam, petanque, olahraga tradisional","Pak Azi / Mbak Yanti & Bu Eko / Pak Tatang / Bu Yunita"],
+    ["10.00–10.20","Doorprize","Sie acara"],
+    ["10.20–10.30","Penampilan pencak silat","Sie acara"],
+    ["10.30–11.00","Hiburan organ tunggal & doorprize","Sie acara"],
+    ["11.00–11.30","Pengumuman pemenang lomba","Sie acara"],
+    ["11.30–11.45","Penampilan PSM","Sie acara"],
+    ["11.45–12.00","Doorprize & penutup","Sie acara"]
+  ];
+
+  var STATS = [
+    ["Futsal","450","Pak Azi"],
+    ["Petanque","120","Pak Tatang"],
+    ["Komunitas senam","650","Mbak Yanti & Bu Eko"],
+    ["Siswa/i SMA (22 sekolah)","440","Bu Eko"],
+    ["Siswa/i SMK (15 sekolah)","300","Bu Eko"],
+    ["Guru pendamping","57","Bu Eko"],
+    ["Dosen & karyawan","300","Bu Eko"],
+    ["UKM","100","Pak Nastain"]
+  ];
+
+  var state = {};
+  var db = null;
+
+  function fmtRupiah(n){
+    if(n === 0) return "Rp –";
+    return "Rp " + n.toLocaleString("id-ID");
+  }
+
+  function categoryCounts(cat){
+    var done = 0;
+    cat.items.forEach(function(it){ if(state[it.id]) done++; });
+    return { done: done, total: cat.items.length };
+  }
+
+  function statusClass(done, total){
+    if(done === 0) return "st-none";
+    if(done === total) return "st-done";
+    return "st-partial";
+  }
+
+  function renderChips(){
+    var row = document.getElementById("chipRow");
+    row.innerHTML = "";
+    CATEGORIES.forEach(function(cat){
+      var c = categoryCounts(cat);
+      var a = document.createElement("a");
+      a.className = "chip";
+      a.href = "#cat-" + cat.id;
+      var dot = document.createElement("span");
+      dot.className = "dot " + statusClass(c.done, c.total);
+      a.appendChild(dot);
+      var label = document.createElement("span");
+      label.textContent = cat.title;
+      a.appendChild(label);
+      var count = document.createElement("span");
+      count.className = "count tab-num";
+      count.textContent = c.done + "/" + c.total;
+      a.appendChild(count);
+      row.appendChild(a);
+    });
+  }
+
+  function renderOverview(){
+    var totalDone = 0, totalAll = 0;
+    CATEGORIES.forEach(function(cat){
+      var c = categoryCounts(cat);
+      totalDone += c.done; totalAll += c.total;
+    });
+    var pct = totalAll ? Math.round((totalDone/totalAll)*100) : 0;
+    document.getElementById("overallRing").style.setProperty("--pct", pct);
+    document.getElementById("overallPct").textContent = pct + "%";
+    document.getElementById("overallCount").textContent = totalDone + " / " + totalAll + " selesai";
+  }
+
+  function itemRowHtml(item){
+    var checked = !!state[item.id];
+    var extra = "";
+    if(item.tag){ extra = '<span class="item-tag">' + item.tag + '</span>'; }
+    var amount = (typeof item.amount === "number")
+      ? '<span class="item-amount tab-num">' + fmtRupiah(item.amount) + '</span>' : "";
+    return (
+      '<div class="item-row' + (checked ? ' done' : '') + '" data-id="' + item.id + '">' +
+        '<input type="checkbox" id="chk-' + item.id + '"' + (checked ? ' checked' : '') + '>' +
+        '<label for="chk-' + item.id + '"><span class="item-text">' + item.label + '</span>' + extra + '</label>' +
+        amount +
+      '</div>'
+    );
+  }
+
+  function renderChecklist(){
+    var grid = document.getElementById("checklistGrid");
+    var openIds = ["perizinan","vip","logistik"];
+    grid.innerHTML = CATEGORIES.map(function(cat){
+      var c = categoryCounts(cat);
+      var st = statusClass(c.done, c.total);
+      var stLabel = c.done === 0 ? "Belum mulai" : (c.done === c.total ? "Selesai" : "Berjalan");
+      var openAttr = openIds.indexOf(cat.id) !== -1 ? " open" : "";
+      return (
+        '<details class="category" id="cat-' + cat.id + '"' + openAttr + '>' +
+          '<summary>' +
+            '<span>' + cat.title + '</span>' +
+            '<span style="display:flex;align-items:center;gap:10px;">' +
+              '<span class="cat-status ' + st + ' tab-num">' + stLabel + ' · ' + c.done + '/' + c.total + '</span>' +
+              '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '</span>' +
+          '</summary>' +
+          '<div class="cat-body">' + cat.items.map(itemRowHtml).join("") + '</div>' +
+        '</details>'
+      );
+    }).join("");
+
+    grid.querySelectorAll('input[type="checkbox"]').forEach(function(box){
+      box.addEventListener("change", function(){
+        var row = box.closest(".item-row");
+        var id = row.getAttribute("data-id");
+        var item = findItem(id);
+        onToggle(id, item ? item.label : "", box.checked);
+      });
+    });
+  }
+
+  function findItem(id){
+    for(var i=0;i<CATEGORIES.length;i++){
+      for(var j=0;j<CATEGORIES[i].items.length;j++){
+        if(CATEGORIES[i].items[j].id === id) return CATEGORIES[i].items[j];
+      }
+    }
+    return null;
+  }
+
+  function renderAll(){
+    renderChecklist();
+    renderChips();
+    renderOverview();
+  }
+
+  function onToggle(id, label, checked){
+    state[id] = checked;
+    renderAll();
+    if(db){
+      db.doc("checklist/" + id).set({
+        done: checked,
+        label: label,
+        updatedAt: new Date().toISOString()
+      }).catch(function(){ /* onSnapshot will reconcile */ });
+    }
+  }
+
+  function renderTimeline(){
+    var el = document.getElementById("timelineList");
+    el.innerHTML = TIMELINE.map(function(row){
+      return '<li><span class="t tab-num">' + row[0] + '</span><span>' + row[1] +
+        (row[2] ? '<span class="who">' + row[2] + '</span>' : '') + '</span></li>';
+    }).join("");
+  }
+
+  function renderStats(){
+    var el = document.getElementById("statGrid");
+    el.innerHTML = STATS.map(function(row){
+      return '<div class="stat-tile"><span class="n tab-num">' + row[1] + '</span><span class="l">' + row[0] + ' · ' + row[2] + '</span></div>';
+    }).join("");
+  }
+
+  function updateCountdown(){
+    var now = new Date();
+    var target = new Date(EVENT.dateISO);
+    var diff = target.getTime() - now.getTime();
+    var hdayEl = document.getElementById("hday");
+    var clockEl = document.getElementById("clock");
+    if(diff <= 0){
+      hdayEl.textContent = "HARI-H";
+      clockEl.innerHTML = "Semoga acara lancar!";
+      return;
+    }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    var secs = Math.floor((diff % 60000) / 1000);
+    var daysCeil = Math.ceil(diff / 86400000);
+    hdayEl.textContent = "H−" + daysCeil;
+    clockEl.innerHTML = pad(days) + "h <b>" + pad(hours) + "j</b> " + pad(mins) + "m " + pad(secs) + "d";
+  }
+  function pad(n){ return n < 10 ? "0" + n : String(n); }
+
+  function init(){
+    renderTimeline();
+    renderStats();
+    renderAll();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    document.getElementById("lastLoaded").textContent = "Dimuat: " + new Date().toLocaleString("id-ID", {dateStyle:"medium", timeStyle:"short"}) + " WIB";
+
+    if(!(window.claude && window.claude.use)){
+      document.getElementById("readonlyNote").classList.add("show");
+      return;
+    }
+    window.claude.use("db").then(function(res){
+      db = res;
+      if(!db){
+        document.getElementById("readonlyNote").classList.add("show");
+        return;
+      }
+      db.collection("checklist").onSnapshot(function(snap){
+        snap.docs.forEach(function(d){
+          var data = d.data();
+          state[d.id] = !!(data && data.done);
+        });
+        renderAll();
+      }, function(){
+        document.getElementById("readonlyNote").classList.add("show");
+      });
+    });
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
